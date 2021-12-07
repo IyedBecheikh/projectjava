@@ -82,8 +82,11 @@ public class Dashboard implements Initializable {
         test.setOnAction(this::justTesting);
         TreeItem<String> newLeaf = new TreeItem<>("Main Menu");
         navList.setRoot(newLeaf);
+
         TreeItem<String> newLeaf2 = new TreeItem<>("Profil",buildIcon("profil.png"));
+//        TreeItem<String> newLeaf3 = new TreeItem<>("Profil",buildIcon("profil.png"));
         navList.getRoot().getChildren().add(newLeaf2);
+//        navList.getRoot().getChildren().add(newLeaf3);
     }
 
 
