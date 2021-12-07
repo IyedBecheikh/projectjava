@@ -80,7 +80,7 @@ public class Dashboard implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         mainPane.setTabClosingPolicy(SELECTED_TAB);
         test.setOnAction(this::justTesting);
-        TreeItem<String> newLeaf = new TreeItem<>("Main Menu");
+        TreeItem<String> newLeaf = new TreeItem<>("Main-Menu");
         navList.setRoot(newLeaf);
         TreeItem<String> newLeaf2 = new TreeItem<>("Profil",buildIcon("profil.png"));
         navList.getRoot().getChildren().add(newLeaf2);
