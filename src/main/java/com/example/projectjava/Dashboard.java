@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +21,7 @@ public class Dashboard implements Initializable {
     TabPane mainPane;
 
     @FXML
-    TreeView navList;
+     TreeView navList;
 
     private  ImageView buildIcon(String icon) {
         String imgPatch = Dashboard.class.getResource(icon).toString();
@@ -73,6 +72,19 @@ public class Dashboard implements Initializable {
         else {
             mainPane.getSelectionModel().select(findTab("WelcomeTab"));
         }
+
+        int execute = ConnectionBD.ajouterMedecin("Iyed","Becheikh","09893923","1990-05-19",9,1,"29 Sidi Ali Somai Somaa, Nabeul 8023","27968610","iyedmoto1@gmail.com","Nutritionniste",0);
+
+        Alert alert;
+        if (execute == 1){
+            alert = Tools.buildInfo("Successful", "Patient ajouté avec succès!");
+        } else {
+            alert = Tools.buildError("Unsuccessful", "Erreur lors de l'ajout du patient", "303");
+        }
+        alert.showAndWait();
+
+        System.out.println(execute);
+
     }
 
 
