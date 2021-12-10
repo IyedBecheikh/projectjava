@@ -3,23 +3,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="360.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectjava.Login">
+<AnchorPane prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectjava.Login">
    <children>
-      <Button layoutX="241.0" layoutY="310.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Login" />
+      <Button fx:id="loginButton" layoutX="241.0" layoutY="310.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Login" />
       <CheckBox layoutX="250.0" layoutY="259.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="103.0" text="Remember Me" />
-      <TextField layoutX="188.0" layoutY="155.0" prefHeight="25.0" prefWidth="273.0" />
-      <TextField layoutX="188.0" layoutY="220.0" prefHeight="25.0" prefWidth="273.0" />
-      <Label layoutX="110.0" layoutY="159.0" text="Username:" />
+      <TextField fx:id="email" layoutX="188.0" layoutY="155.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="110.0" layoutY="159.0" text="Email:" />
       <Label layoutX="112.0" layoutY="224.0" text="Password:" />
-      <ImageView fitHeight="128.0" fitWidth="247.0" layoutX="185.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="119.0" fitWidth="230.0" layoutX="187.0" layoutY="14.0" pickOnBounds="true">
          <image>
             <Image url="@samplelogo.png" />
          </image>
       </ImageView>
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="285.0" prefHeight="17.0" prefWidth="594.0" text="Email can't be empty" textAlignment="CENTER" textFill="RED" />
+      <PasswordField fx:id="pas" layoutX="188.0" layoutY="220.0" prefHeight="25.0" prefWidth="273.0" />
    </children>
 </AnchorPane>

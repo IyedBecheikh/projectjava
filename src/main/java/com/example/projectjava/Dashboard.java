@@ -1,5 +1,7 @@
 package com.example.projectjava;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,7 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static javafx.scene.control.TabPane.TabClosingPolicy.SELECTED_TAB;
@@ -21,10 +26,23 @@ public class Dashboard implements Initializable {
     TabPane mainPane;
 
     @FXML
-     TreeView navList;
+    Label userLabel;
 
-    private  ImageView buildIcon(String icon) {
-        String imgPatch = Dashboard.class.getResource(icon).toString();
+    @FXML
+    TreeView navList;
+
+    @FXML
+    Label adminLabel;
+
+    private static ImageView buildIcon(String icon) {
+        String imgPatch;
+        try {
+            imgPatch = Dashboard.class.getResource(icon).toString();
+        } catch (NullPointerException ex) {
+            imgPatch = Dashboard.class.getResource("handIcon.png").toString();
+        }
+        ;
+
         Image i = new Image(imgPatch);
         ImageView imageView = new ImageView();
         imageView.setFitHeight(16);
@@ -33,46 +51,52 @@ public class Dashboard implements Initializable {
         return imageView;
     }
 
-    private boolean checkTab(String id,TabPane pane){
+    private static boolean checkTab(String id, TabPane pane) {
         Boolean exists = false;
-        for (Tab tab:pane.getTabs()) {
-            if (tab.getId() == null){continue;}
-            else if (tab.getId().equals("WelcomeTab")){
-                exists =  true;
+        for (Tab tab : pane.getTabs()) {
+            if (tab.getId() == null) {
+                continue;
+            } else if (tab.getId().equals(id)) {
+                exists = true;
             }
         }
         return exists;
     }
 
-    private Tab findTab(String id){
+    private static Tab findTab(String id, TabPane mainPane) {
         Tab foundTab = null;
-        if(!checkTab(id,mainPane)){return null;}
-        else{
-            for (Tab tab:mainPane.getTabs()) {
-                if (tab.getId() == null){continue;}
-                else if (tab.getId().equals(id)){
+        if (!checkTab(id, mainPane)) {
+            return null;
+        } else {
+            for (Tab tab : mainPane.getTabs()) {
+                if (tab.getId() == null) {
+                    continue;
+                } else if (tab.getId().equals(id)) {
                     foundTab = tab;
                     break;
                 }
-            }}
+            }
+        }
         return foundTab;
     }
 
-    static void addTab(Tab tab, TabPane pane){
-        pane.getTabs().add(tab);
+    static void addTab(String name, String icon, TabPane pane) {
+        if (!checkTab(name, pane)) {
+            Tab newTab = new Tab(name);
+            newTab.setGraphic(buildIcon(icon));
+            newTab.setId(name);
+            pane.getTabs().add(newTab);
+            pane.getSelectionModel().select(newTab);
+        } else {
+            pane.getSelectionModel().select(findTab(name, pane));
+        }
     }
 
-    private void justTesting(ActionEvent event){
-        if (!checkTab("WelcomeTab",mainPane)){
-            Tab newTab = new Tab("Welcome");
-            newTab.setGraphic(buildIcon("handIcon.png"));
-            newTab.setId("WelcomeTab");
-            Dashboard.addTab(newTab,mainPane);
-        }
-        else {
-            mainPane.getSelectionModel().select(findTab("WelcomeTab"));
-        }
+    private void justTesting(ActionEvent event) {
+        Dashboard.addTab("Welcome", "handIcon.png", mainPane);
+    }
 
+/*
         int execute = ConnectionBD.ajouterMedecin("Iyed","Becheikh","09893923","1990-05-19",9,1,"29 Sidi Ali Somai Somaa, Nabeul 8023","27968610","iyedmoto1@gmail.com","Nutritionniste",0);
 
         Alert alert;
@@ -83,21 +107,98 @@ public class Dashboard implements Initializable {
         }
         alert.showAndWait();
 
-        System.out.println(execute);
-
-    }
+        System.out.println(execute);*/
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        adminLabel.setVisible(false);
+        userLabel.setText(Login.effectif.Nom);
+
         mainPane.setTabClosingPolicy(SELECTED_TAB);
         test.setOnAction(this::justTesting);
         TreeItem<String> newLeaf = new TreeItem<>("Main-Menu");
         navList.setRoot(newLeaf);
-        TreeItem<String> newLeaf2 = new TreeItem<>("Profil",buildIcon("profil.png"));
-        navList.getRoot().getChildren().add(newLeaf2);
-    }
+        List<TreeItem> leafs = new ArrayList<>();
 
+        leafs.add(new TreeItem<>("Accueil", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Patients", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Ordonnances", buildIcon("profil.png")));
+
+        leafs.add(new TreeItem<>("Rendez-vous / Examination", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Laboratoire", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Imagerie", buildIcon("profil.png")));
+
+        leafs.add(new TreeItem<>("Hospitalisation", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Bloc opératoire", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Stock / Pharmacie", buildIcon("profil.png")));
+
+        navList.getRoot().getChildren().addAll(leafs);
+
+        if (Login.isAdmin) {
+
+            adminLabel.setVisible(true);
+
+            TreeItem<String> adminLeaf = new TreeItem<>("Outils d'administration", buildIcon("profil.png"));
+
+            TreeItem<String> adminLeafy = new TreeItem<>("Comptes", buildIcon("profil.png"));
+            TreeItem<String> adminLeafy2 = new TreeItem<>("Medecins", buildIcon("profil.png"));
+            TreeItem<String> adminLeafy3 = new TreeItem<>("Paramedicals", buildIcon("profil.png"));
+
+            adminLeaf.getChildren().addAll(adminLeafy, adminLeafy2, adminLeafy3);
+            navList.getRoot().getChildren().add(adminLeaf);
+        }
+
+        navList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> old_val, TreeItem<String> new_val) {
+                TreeItem<String> selectedItem = new_val;
+
+                switch (selectedItem.getValue()) {
+                    case "Accueil":
+                        addTab("Accueil", "Accueil.png", mainPane);
+                        break;
+                    case "Patients":
+                        addTab("Patients", "Patients.png", mainPane);
+                        break;
+                    case "Ordonnances":
+                        addTab("Ordonnances", "Ordonnances.png", mainPane);
+                        break;
+                    case "Rendez-vous / Examination":
+                        addTab("Rendez-vous / Examination", "RE.png", mainPane);
+                        break;
+                    case "Laboratoire":
+                        addTab("Laboratoire", "Laboratoire.png", mainPane);
+                        break;
+                    case "Imagerie":
+                        addTab("Imagerie", "Imagerie.png", mainPane);
+                        break;
+                    case "Hospitalisation":
+                        addTab("Hospitalisation", "Hospitalisation.png", mainPane);
+                        break;
+                    case "Bloc opératoire":
+                        addTab("Bloc opératoire", "BO.png", mainPane);
+                        break;
+                    case "Stock / Pharmacie":
+                        addTab("Stock / Pharmacie", "SP.png", mainPane);
+                        break;
+                    case "Comptes":
+                        addTab("Comptes", "Comptes.png", mainPane);
+                        break;
+                    case "Medecins":
+                        addTab("Medecins", "Medecins.png", mainPane);
+                        break;
+                    case "Paramedicals":
+                        addTab("Paramedicals", "Paramedicals.png", mainPane);
+                        break;
+                }
+
+            }
+        });
+
+    }
 
 
 }
