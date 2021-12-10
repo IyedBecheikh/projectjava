@@ -31,6 +31,7 @@ public class Dashboard implements Initializable {
     @FXML
     Label adminLabel;
 
+
     private static ImageView buildIcon(String icon) {
         String imgPatch;
         try {
@@ -114,17 +115,17 @@ public class Dashboard implements Initializable {
         navList.setRoot(newLeaf);
         List<TreeItem> leafs = new ArrayList<>();
 
-        leafs.add(new TreeItem<>("Accueil", buildIcon("profil.png")));
-        leafs.add(new TreeItem<>("Patients", buildIcon("profil.png")));
-        leafs.add(new TreeItem<>("Ordonnances", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Accueil", buildIcon("Accueil.png")));
+        leafs.add(new TreeItem<>("Patients", buildIcon("Patients.png")));
+        leafs.add(new TreeItem<>("Ordonnances", buildIcon("Ordonnances.png")));
 
-        leafs.add(new TreeItem<>("Rendez-vous / Examination", buildIcon("profil.png")));
-        leafs.add(new TreeItem<>("Laboratoire", buildIcon("profil.png")));
-        leafs.add(new TreeItem<>("Imagerie", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Rendez-vous / Examination", buildIcon("RE.png")));
+        leafs.add(new TreeItem<>("Laboratoire", buildIcon("Laboratoire.png")));
+        leafs.add(new TreeItem<>("Imagerie", buildIcon("Imagerie.png")));
 
-        leafs.add(new TreeItem<>("Hospitalisation", buildIcon("profil.png")));
-        leafs.add(new TreeItem<>("Bloc opératoire", buildIcon("profil.png")));
-        leafs.add(new TreeItem<>("Stock / Pharmacie", buildIcon("profil.png")));
+        leafs.add(new TreeItem<>("Hospitalisation", buildIcon("Hospitalisation.png")));
+        leafs.add(new TreeItem<>("Bloc opératoire", buildIcon("BO.png")));
+        leafs.add(new TreeItem<>("Stock / Pharmacie", buildIcon("SP.png")));
 
         navList.getRoot().getChildren().addAll(leafs);
 
@@ -132,11 +133,11 @@ public class Dashboard implements Initializable {
 
             adminLabel.setVisible(true);
 
-            TreeItem<String> adminLeaf = new TreeItem<>("Outils d'administration", buildIcon("profil.png"));
+            TreeItem<String> adminLeaf = new TreeItem<>("Outils d'administration", buildIcon("Outils d'administration.png"));
 
-            TreeItem<String> adminLeafy = new TreeItem<>("Comptes", buildIcon("profil.png"));
-            TreeItem<String> adminLeafy2 = new TreeItem<>("Medecins", buildIcon("profil.png"));
-            TreeItem<String> adminLeafy3 = new TreeItem<>("Paramedicals", buildIcon("profil.png"));
+            TreeItem<String> adminLeafy = new TreeItem<>("Comptes", buildIcon("Comptes.png"));
+            TreeItem<String> adminLeafy2 = new TreeItem<>("Medecins", buildIcon("Medecins.png"));
+            TreeItem<String> adminLeafy3 = new TreeItem<>("Paramedicals", buildIcon("Paramedicals.png"));
 
             adminLeaf.getChildren().addAll(adminLeafy, adminLeafy2, adminLeafy3);
             navList.getRoot().getChildren().add(adminLeaf);
