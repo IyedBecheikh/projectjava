@@ -136,6 +136,67 @@ public class ConnectionBD {
         }
     }
 
+    public static boolean checkLogin(String email, String pass) {
+        try {
+            Connection con = getConnection();
+            Statement st = con.createStatement();
 
+            String sql = String.format("SELECT * FROM `compte` WHERE `Email` = '%s' AND Password = '%s';",email,pass);
+            ResultSet rs = st.executeQuery(sql);
+            if (!rs.isBeforeFirst() ) {
+                return false;
+            }
+            else {
+                while (rs.next()) {
+                    Login.isLoggedIn = true;
+                    Login.IDeff = rs.getInt("IDeff");
+                    Login.isAdmin = rs.getBoolean("isAdmin");
+                    Login.effectif = getEffectif(Login.IDeff);
+                }
+                return true;
+            }
+        }
+        catch (SQLException ex){
+        return false;
+        }
+    }
 
+    public static Effectif getEffectif(int IDeff) {
+        try {
+            Connection con = getConnection();
+            Statement st = con.createStatement();
+
+            String sql = String.format("SELECT * FROM `effectif` WHERE `ID` = '%s';",IDeff);
+            ResultSet rs = st.executeQuery(sql);
+
+            if (!rs.isBeforeFirst() ) {
+                Alert error = Tools.buildError("Error","No effectif found","303");
+                error.showAndWait();
+                return null;
+            }
+            else {
+                Effectif eff = null;
+                while (rs.next()) {
+                    String Nom = rs.getString("Nom");
+                    String Prenom = rs.getString("Prenom");
+                    String CIN = rs.getString("CIN");
+                    java.util.Date dateNaissance = rs.getDate("dateNaissance");
+                    int Age = rs.getInt("Age");
+                    String Adresse = rs.getString("Adresse");
+                    String Email = rs.getString("Email");
+                    int Sexe = rs.getInt("Sexe");
+                    String Telephone = rs.getString("Telephone");
+                    String dateRecrutement = rs.getString("dateRecrutement");
+
+                    eff = new Effectif(Nom, Prenom, CIN, dateNaissance, Age, Adresse, Email, Sexe, Telephone, dateRecrutement);
+                }
+                return eff;
+            }
+
+        } catch (SQLException ex) {
+            Alert error = Tools.buildError("Error", ex.getMessage(), ex.getSQLState());
+            error.showAndWait();
+            return null;
+        }
+    }
 }
