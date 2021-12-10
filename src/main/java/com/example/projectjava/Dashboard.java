@@ -20,9 +20,6 @@ import static javafx.scene.control.TabPane.TabClosingPolicy.SELECTED_TAB;
 public class Dashboard implements Initializable {
 
     @FXML
-    Button test;
-
-    @FXML
     TabPane mainPane;
 
     @FXML
@@ -92,10 +89,6 @@ public class Dashboard implements Initializable {
         }
     }
 
-    private void justTesting(ActionEvent event) {
-        Dashboard.addTab("Welcome", "handIcon.png", mainPane);
-    }
-
 /*
         int execute = ConnectionBD.ajouterMedecin("Iyed","Becheikh","09893923","1990-05-19",9,1,"29 Sidi Ali Somai Somaa, Nabeul 8023","27968610","iyedmoto1@gmail.com","Nutritionniste",0);
 
@@ -117,7 +110,6 @@ public class Dashboard implements Initializable {
         userLabel.setText(Login.effectif.Nom);
 
         mainPane.setTabClosingPolicy(SELECTED_TAB);
-        test.setOnAction(this::justTesting);
         TreeItem<String> newLeaf = new TreeItem<>("Main-Menu");
         navList.setRoot(newLeaf);
         List<TreeItem> leafs = new ArrayList<>();
