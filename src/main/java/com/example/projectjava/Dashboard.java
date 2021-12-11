@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -20,6 +21,8 @@ public class Dashboard implements Initializable {
 
     @FXML
     TabPane mainPane;
+
+    public static TabPane corePane;
 
     @FXML
     Label userLabel;
@@ -77,17 +80,70 @@ public class Dashboard implements Initializable {
         return foundTab;
     }
 
+    private static void removeTab(String id, TabPane mainPane) {
+        for (Tab tab : mainPane.getTabs()) {
+            if (tab.getId() == null) {
+                continue;
+            } else if (tab.getId().equals(id)) {
+                mainPane.getTabs().remove(tab);
+                break;
+            }
+        }
+    }
+
     static void addTab(String name, String icon, TabPane pane) {
         if (!checkTab(name, pane)) {
             Tab newTab = new Tab(name);
             newTab.setGraphic(buildIcon(icon));
             newTab.setId(name);
+            if(name.equals("Accueil")){
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("AcceuilTab.fxml"));
+                try {
+                    newTab.setContent(fxmlLoader.load());
+                }
+                catch (Exception ex){System.out.println(ex.getMessage());}
+            } else if(name.equals("Medecins")){
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MedecinsTab.fxml"));
+                try {
+                    newTab.setContent(fxmlLoader.load());
+                }
+                catch (Exception ex){System.out.println(ex.getCause());}
+            }
+            else if(name.equals("AjouterPatients")){
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PatientsTab.fxml"));
+                try {
+                    newTab.setContent(fxmlLoader.load());
+                }
+                catch (Exception ex){System.out.println(ex.getCause());}
+            }
+            else if(name.equals("Comptes")){
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ComptesTab.fxml"));
+                try {
+                    newTab.setContent(fxmlLoader.load());
+                }
+                catch (Exception ex){System.out.println(ex.getCause());}
+            }
+            else if(name.equals("Stock / Pharmacie")){
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("StockTab.fxml"));
+                try {
+                    newTab.setContent(fxmlLoader.load());
+                }
+                catch (Exception ex){System.out.println(ex.getCause());}
+            }
+
+
             pane.getTabs().add(newTab);
             pane.getSelectionModel().select(newTab);
         } else {
             pane.getSelectionModel().select(findTab(name, pane));
         }
     }
+
+    public void addPatientTab() {
+        Dashboard.addTab("AjouterPatients","AjouterPatients.png",this.mainPane);
+    }
+
+
 
 /*
         int execute = ConnectionBD.ajouterMedecin("Iyed","Becheikh","09893923","1990-05-19",9,1,"29 Sidi Ali Somai Somaa, Nabeul 8023","27968610","iyedmoto1@gmail.com","Nutritionniste",0);
@@ -189,6 +245,8 @@ public class Dashboard implements Initializable {
 
             }
         });
+
+        corePane = mainPane;
 
     }
 

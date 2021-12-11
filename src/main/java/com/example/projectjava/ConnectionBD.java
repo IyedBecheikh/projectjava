@@ -1,9 +1,15 @@
 package com.example.projectjava;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.*;
 import java.util.Calendar;
+import java.util.List;
 
 // 1 - Successful
 // 0 - Error
@@ -199,4 +205,66 @@ public class ConnectionBD {
             return null;
         }
     }
+
+    public static void getAllDoctors(TableView list) {
+        try {
+
+            TableColumn nameColumn = new TableColumn("Nom");
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
+
+            TableColumn PrenomColumn = new TableColumn("Prenom");
+            PrenomColumn.setCellValueFactory(new PropertyValueFactory<>("Prenom"));
+
+            TableColumn CINColumn = new TableColumn("CIN");
+            CINColumn.setCellValueFactory(new PropertyValueFactory<>("CIN"));
+
+            TableColumn AgeColumn = new TableColumn("Age");
+            AgeColumn.setCellValueFactory(new PropertyValueFactory<>("Age"));
+
+            TableColumn EmailColumn = new TableColumn("Email");
+            EmailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
+
+            TableColumn TelephoneColumn = new TableColumn("Telephone");
+            TelephoneColumn.setCellValueFactory(new PropertyValueFactory<>("Telephone"));
+
+            TableColumn AdresseColumn = new TableColumn("Adresse");
+            AdresseColumn.setCellValueFactory(new PropertyValueFactory<>("Adresse"));
+
+            list.getColumns().addAll(nameColumn,PrenomColumn,CINColumn,AgeColumn,EmailColumn,TelephoneColumn,AdresseColumn);
+
+
+            Connection con = getConnection();
+            Statement st = con.createStatement();
+
+            String sql = "SELECT * FROM effectif INNER JOIN medecin ON effectif.ID = medecin.`eff_ID`;";
+            ResultSet rs = st.executeQuery(sql);
+
+            if (!rs.isBeforeFirst() ) {
+                Alert error = Tools.buildError("Error","No medecin found","303");
+                error.showAndWait();
+            }
+            else {
+                while (rs.next()) {
+                    String Nom = rs.getString("Nom");
+                    String Prenom = rs.getString("Prenom");
+                    String CIN = rs.getString("CIN");
+                    java.util.Date dateNaissance = rs.getDate("dateNaissance");
+                    int Age = rs.getInt("Age");
+                    String Adresse = rs.getString("Adresse");
+                    String Email = rs.getString("Email");
+                    int Sexe = rs.getInt("Sexe");
+                    String Telephone = rs.getString("Telephone");
+                    String dateRecrutement = rs.getString("dateRecrutement");
+
+                    Effectif eff = new Effectif(Nom,Prenom,CIN,dateNaissance,Age,Adresse,Email,Sexe,Telephone,dateRecrutement);
+                    list.getItems().add(eff);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Alert error = Tools.buildError("Error", ex.getMessage(), ex.getSQLState());
+            error.showAndWait();
+        }
+    }
+
 }
