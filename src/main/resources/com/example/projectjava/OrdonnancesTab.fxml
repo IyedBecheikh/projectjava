@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="551.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectjava.OrdonnancesTab">
+   <children>
+      <Button layoutX="712.0" layoutY="512.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Ok" />
+      <Button layoutX="26.0" layoutY="512.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Supprimer" />
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chercher" />
+      <Line endX="466.0" layoutX="314.0" layoutY="22.0" startX="-224.0" />
+      <Text layoutX="26.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom " />
+      <TextField fx:id="fchercher" layoutX="82.0" layoutY="39.0" prefHeight="25.0" prefWidth="592.0" />
+      <Button fx:id="buttonChercher" layoutX="684.0" layoutY="39.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Chercher" />
+      <Text layoutX="26.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note" />
+      <TextArea layoutX="82.0" layoutY="81.0" prefHeight="90.0" prefWidth="697.0" />
+      <Text layoutX="14.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ordonnance" />
+      <Line endX="466.0" layoutX="314.0" layoutY="199.0" startX="-224.0" />
+      <TableView fx:id="tv" layoutX="26.0" layoutY="216.0" prefHeight="285.0" prefWidth="756.0" />
+   </children>
+</AnchorPane>

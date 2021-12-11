@@ -15,11 +15,11 @@
          </image>
       </ImageView>
       <Button fx:id="ajouterButton" layoutX="28.0" layoutY="289.0" mnemonicParsing="false" onAction="#showPatient" prefHeight="105.0" prefWidth="242.0" text="Ajouter Patients" />
-      <Button layoutX="279.0" layoutY="289.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Ordonnances" />
-      <Button layoutX="531.0" layoutY="289.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Medecins" />
-      <Button layoutX="28.0" layoutY="401.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Rendez-vous" />
-      <Button layoutX="279.0" layoutY="401.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Pharmacie" />
-      <Button layoutX="531.0" layoutY="401.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Comptes" />
+      <Button fx:id="ordoButton" layoutX="279.0" layoutY="289.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Ordonnances" />
+      <Button fx:id="medButton" layoutX="531.0" layoutY="289.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Medecins" />
+      <Button fx:id="rvButton" layoutX="28.0" layoutY="401.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Rendez-vous" />
+      <Button fx:id="phButton" layoutX="279.0" layoutY="401.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Pharmacie" />
+      <Button fx:id="comptesButton" layoutX="531.0" layoutY="401.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="242.0" text="Comptes" />
       <Button layoutX="693.0" layoutY="222.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Recherche" />
       <TextField layoutX="87.0" layoutY="222.0" prefHeight="25.0" prefWidth="596.0" promptText="Recherche ..." />
       <Text layoutX="35.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient" />

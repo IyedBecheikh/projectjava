@@ -130,6 +130,20 @@ public class Dashboard implements Initializable {
                 }
                 catch (Exception ex){System.out.println(ex.getCause());}
             }
+            else if(name.equals("Ordonnances")){
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("OrdonnancesTab.fxml"));
+                try {
+                    newTab.setContent(fxmlLoader.load());
+                }
+                catch (Exception ex){System.out.println(ex.getCause());}
+            }
+            else{
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("rendezvous.fxml"));
+                try {
+                    newTab.setContent(fxmlLoader.load());
+                }
+                catch (Exception ex){System.out.println(ex.getCause());}
+            }
 
 
             pane.getTabs().add(newTab);
