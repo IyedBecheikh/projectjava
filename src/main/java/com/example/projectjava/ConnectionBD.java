@@ -267,4 +267,50 @@ public class ConnectionBD {
         }
     }
 
+    public static void buildList(String text, TableView tv) {
+    try {
+        Connection con = getConnection();
+        Statement st = con.createStatement();
+
+        String sql = String.format("SELECT * FROM `ordonnance` WHERE `patient_ID` IN (SELECT ID FROM `patient` WHERE `Nom`='%s');",text);
+        ResultSet rs = st.executeQuery(sql);
+
+        if (rs.isBeforeFirst()){
+            while (rs.next()) {
+                int patient_ID = rs.getInt("patient_ID");
+                int commanderPar = rs.getInt("commanderPar");
+                int Medicament_ID = rs.getInt("Medicament_ID");
+                int Dose = rs.getInt("Dose");
+                int DureeJours = rs.getInt("DureeJours");
+
+                TableColumn patient_IDColumn = new TableColumn("patient_ID");
+                patient_IDColumn.setCellValueFactory(new PropertyValueFactory<>("patient_ID"));
+
+                TableColumn commanderParColumn = new TableColumn("commanderPar");
+                commanderParColumn.setCellValueFactory(new PropertyValueFactory<>("commanderPar"));
+
+                TableColumn Medicament_IDColumn = new TableColumn("Medicament_ID");
+                Medicament_IDColumn .setCellValueFactory(new PropertyValueFactory<>("Medicament_ID"));
+
+                TableColumn DoseColumn = new TableColumn("Dose");
+                DoseColumn.setCellValueFactory(new PropertyValueFactory<>("Dose"));
+
+                TableColumn DureeJoursColumn = new TableColumn("DureeJours");
+                DureeJoursColumn.setCellValueFactory(new PropertyValueFactory<>("DureeJours"));
+
+
+                tv.getColumns().addAll(patient_IDColumn,commanderParColumn,Medicament_IDColumn,DoseColumn,DureeJoursColumn);
+
+                ordo eff = new ordo(patient_ID,commanderPar,Medicament_ID,Dose,DureeJours);
+                tv.getItems().add(eff);
+            }
+        }
+
+    } catch (SQLException ex) {
+        Alert error = Tools.buildError("Error", ex.getMessage(), ex.getSQLState());
+        error.showAndWait();
+    }
+
+
+    }
 }
